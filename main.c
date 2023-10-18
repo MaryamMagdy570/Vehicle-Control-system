@@ -6,6 +6,7 @@
 
 //prototype:
 void Print_Status();
+void print_Sensor_Set_Menu();
 void Update_Engine_Speed();
 void Update_AC_Status();
 void Update_Engine_Ctrl_Status();
@@ -13,8 +14,8 @@ void Update_Engine_Ctrl_Status();
 
 //global variables;
 char choise;
-char exit_flag=0;
-char entry_flag=1;
+char exit_flag1=0;
+char exit_flag2=0;
 
 char Engine_State[3] ;
 char Traffic_Light_Color = '\0';
@@ -26,10 +27,9 @@ char AC[3] ;   //AC -> Air Conditioner
 
 int main ()
 {
-	
-	while(!exit_flag)
+	while(!exit_flag1)
 	{
-		printf("Hello in Vehicle Control System\n");
+		printf("\nHello in Vehicle Control System\n");
 		printf("What do you want to do?\n\n");
 		printf("1. Turn ON the vehicle engine\n");
 		printf("2. Turn OFF the vehicle engine\n");
@@ -40,44 +40,66 @@ int main ()
 		switch(choise)
 		{
 			case 1:	strcpy(Engine_State,"ON");
-					if(entry_flag) 	
-					{
-						entry_flag = 0;
-						printf("-- Assumption -- \n");
-						printf("--- Please enter the initial values to start tracking --\n");
-						printf("enter the traffic light color: ");
-						scanf(" %c",&Traffic_Light_Color);
-						printf("enter the room temperature: ");
-						scanf(" %f",&Room_Temperature);
-						printf("enter the engine temperature: ");
-						scanf(" %f",&Engine_Temperature);
-					}
-					printf("\nThe vehicle engine is ON Now\n");
-					
-					Update_Engine_Ctrl_Status();
-					Update_AC_Status();
-					Update_Engine_Speed();
-					Print_Status();
-					printf("\n---Sensor set menu---\n");
-					printf("1. Turn OFF the engine\n");
-					printf("2. Set the traffic light color\n");
-					printf("3. Set the room temperature (temprature sensor)\n");
-					printf("4. Set the engine temperature (enginr temprature sensor)\n");
-					printf("\nEnter the number of your choise: ");
-					scanf("%d",&choise);
-					switch(choise)
-					{
-						case 1:	break;
-						case 2:	break;
-						case 3:	break;
-						case 4:	break;
-						default:break;
-					}
+							printf("\nThe vehicle engine is ON Now\n");
+							printf("--- Assumption --- \n");
+							printf("--- Please enter the initial values to start tracking --\n");
+							printf("enter the traffic light color (G/O/R): ");
+							scanf(" %c",&Traffic_Light_Color);
+							printf("enter the room temperature: ");
+							scanf(" %f",&Room_Temperature);
+							printf("enter the engine temperature: ");
+							scanf(" %f",&Engine_Temperature);
+							while(!exit_flag2)
+							{								
+								//FIXME:
+								Update_Engine_Speed();
+								Update_Engine_Ctrl_Status();
+								Update_AC_Status();
+
+								Print_Status();
+								print_Sensor_Set_Menu();
+
+								scanf("%d",&choise);
+								switch(choise)
+								{
+									case 1:	exit_flag2 =1; 	
+													break;
+									case 2:	printf("enter the traffic light color (G/O/R): ");
+													scanf(" %c",&Traffic_Light_Color);
+													
+													//FIXME:
+													Update_Engine_Speed();
+													Update_Engine_Ctrl_Status();
+													Update_AC_Status();
+											
+													break;
+									case 3: printf("enter the room temperature: ");
+													scanf(" %f",&Room_Temperature);	
+													
+													//FIXME:
+													Update_Engine_Speed();
+													Update_Engine_Ctrl_Status();
+													Update_AC_Status();
+													
+													break;
+									case 4:	printf("enter the engine temperature: ");
+													scanf(" %f",&Engine_Temperature);
+
+													//FIXME:
+													Update_Engine_Speed();
+													Update_Engine_Ctrl_Status();
+													Update_AC_Status();
+													
+													break;
+									default:break;
+								}
+							}
 					break;
-			case 2:	printf("\nThe vehicle engine is OFF Now\n\n");	
+			case 2:	strcpy(Engine_State,"OFF");
+					printf("\nThe vehicle engine is OFF Now\n\n");	
 					break;
 			case 3:	printf("\nThanks for using our system\n\n");
-					exit_flag =1; 	
+					exit_flag1 =1; 	
 					break;
 			default:break;
 		}		
@@ -100,7 +122,7 @@ void Print_Status()
 //FIXME:
 void Update_Engine_Ctrl_Status()
 {
-	if(Engine_Temperature>100 && Engine_Temperature<150)
+	if(Engine_Temperature>=100 && Engine_Temperature<=150)
 	{
 		strcpy(Engine_Temperature_Controller_State,"OFF");
 	}
@@ -112,7 +134,7 @@ void Update_Engine_Ctrl_Status()
 
 	if(Vehicle_Speed==30)
 	{
-		strcpy(AC,"ON");
+		strcpy(Engine_Temperature_Controller_State,"ON");
 		Engine_Temperature = Engine_Temperature*(5/4)+1;
 	}
 
@@ -121,7 +143,7 @@ void Update_Engine_Ctrl_Status()
 //FIXME:
 void Update_AC_Status()
 {
-	if(Room_Temperature>10 && Room_Temperature<30)
+	if(Room_Temperature>=10 && Room_Temperature<=30)
 	{
 		strcpy(AC,"OFF");
 	}
@@ -148,3 +170,14 @@ void Update_Engine_Speed()
 		default : break;
 	}
 }
+
+
+void print_Sensor_Set_Menu()
+{
+	printf("\n--- Sensor set menu ---\n");
+	printf("1. Turn OFF the engine\n");
+	printf("2. Set the traffic light color\n");
+	printf("3. Set the room temperature (temprature sensor)\n");
+	printf("4. Set the engine temperature (enginr temprature sensor)\n");
+	printf("\nEnter the number of your choise: ");
+}					
