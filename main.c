@@ -6,7 +6,9 @@
 
 //prototype:
 void Print_Status();
-
+void Update_Engine_Speed();
+void Update_AC_Status();
+void Update_Engine_Ctrl_Status();
 
 
 //global variables;
@@ -42,13 +44,13 @@ int main ()
 					{
 						entry_flag = 0;
 						printf("-- Assumption -- \n");
-						printf("--- Please enter the initial values to start tracking --");
+						printf("--- Please enter the initial values to start tracking --\n");
 						printf("enter the traffic light color: ");
-						scanf("%c",&Traffic_Light_Color);
+						scanf(" %c",&Traffic_Light_Color);
 						printf("enter the room temperature: ");
-						scanf("%f",&Room_Temperature);
+						scanf(" %f",&Room_Temperature);
 						printf("enter the engine temperature: ");
-						scanf("%f",&Engine_Temperature);
+						scanf(" %f",&Engine_Temperature);
 					}
 					printf("\nThe vehicle engine is ON Now\n");
 					
@@ -95,7 +97,7 @@ void Print_Status()
 	printf("Engine Temperature: %.2f\n",Engine_Temperature);
 }
 
-
+//FIXME:
 void Update_Engine_Ctrl_Status()
 {
 	if(Engine_Temperature>100 && Engine_Temperature<150)
@@ -114,9 +116,9 @@ void Update_Engine_Ctrl_Status()
 		Engine_Temperature = Engine_Temperature*(5/4)+1;
 	}
 
-
 }
 
+//FIXME:
 void Update_AC_Status()
 {
 	if(Room_Temperature>10 && Room_Temperature<30)
@@ -140,8 +142,9 @@ void Update_Engine_Speed()
 {
 	switch(Traffic_Light_Color)
 	{
-		case 'G': Vehicle_Speed = 100;
-		case 'O': Vehicle_Speed = 30;
-		case 'R': Vehicle_Speed = 0;
+		case 'G': Vehicle_Speed = 100;  break;
+		case 'O': Vehicle_Speed = 30;	break;
+		case 'R': Vehicle_Speed = 0;	break;
+		default : break;
 	}
 }
