@@ -122,6 +122,13 @@ void Print_Status()
 //FIXME:
 void Update_Engine_Ctrl_Status()
 {
+
+	if(choise == 2 && Vehicle_Speed==30)
+	{
+		strcpy(Engine_Temperature_Controller_State,"ON");
+		Engine_Temperature = Engine_Temperature*(5/4)+1;
+	}
+
 	if(Engine_Temperature>=100 && Engine_Temperature<=150)
 	{
 		strcpy(Engine_Temperature_Controller_State,"OFF");
@@ -132,17 +139,17 @@ void Update_Engine_Ctrl_Status()
 		Engine_Temperature = 125;
 	}
 
-	if(Vehicle_Speed==30)
-	{
-		strcpy(Engine_Temperature_Controller_State,"ON");
-		Engine_Temperature = Engine_Temperature*(5/4)+1;
-	}
-
 }
 
 //FIXME:
 void Update_AC_Status()
 {
+	if(choise == 2 && Vehicle_Speed==30)
+	{
+		strcpy(AC,"ON");
+		Room_Temperature = Room_Temperature*(5/4)+1;
+	}
+
 	if(Room_Temperature>=10 && Room_Temperature<=30)
 	{
 		strcpy(AC,"OFF");
@@ -153,11 +160,6 @@ void Update_AC_Status()
 		Room_Temperature = 20;
 	}
 
-	if(Vehicle_Speed==30)
-	{
-		strcpy(AC,"ON");
-		Room_Temperature = Room_Temperature*(5/4)+1;
-	}
 }
 
 void Update_Engine_Speed()
